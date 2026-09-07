@@ -1,0 +1,36 @@
+{
+    "user_profile": {
+        "name": "Elia",
+        "travel_style": {
+            "pace": "Rilassato (Poche tappe, pause frequenti)",
+            "max_walking_km_per_day": 10,
+            "preferred_transport": [
+                "a piedi",
+                "mezzi pubblici",
+                "bicicletta"
+            ],
+            "avoid": [
+                "tour di gruppo affollati",
+                "trappole per turisti",
+                "orari troppo rigidi"
+            ]
+        },
+        "interests_weights": {
+            "arte_e_architettura": 9,
+            "cucina_locale_e_mercati": 9,
+            "musei_e_storia": 7,
+            "natura_e_parchi": 6,
+            "vita_notturna_e_club": 2,
+            "shopping_commerciale": 1
+        },
+        "constraints_and_habits": {
+            "coffee_breaks": "necessità di pausa caffè/ristoro ogni 2 ore",
+            "museum_limit_per_day": 2,
+            "dietary_preferences": "cucina tipica locale, no fast food"
+        },
+        "dynamic_feedback_history": [],
+        "budget_tier": "Medio",
+        "dietary_restrictions": "Nessuna",
+        "preferred_mobility": "A piedi / Mezzi pubblici"
+    }
+}
