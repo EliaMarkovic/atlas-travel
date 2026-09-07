@@ -12,24 +12,30 @@ from feedback import record_user_feedback
 st.set_page_config(
     page_title="ATLAS - Personal Travel Concierge",
     page_icon="🧭",
-    layout="wide",  # Cambiato da "centered" a "wide" per ottimizzare lo schermo mobile
+    layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Forzo la visibilità dell'icona del menu
+# --- STYLING CSS PER MOSTRARE L'HEADER E L'ICONA MENU SU MOBILE ---
 st.markdown("""
     <style>
-        [data-testid="collapsedControl"] {
+        /* Assicura che l'header di Streamlit sia sempre visibile */
+        header[data-testid="stHeader"] {
             display: flex !important;
+            z-index: 99999 !important;
+        }
+        /* Forza la visibilità del pulsante della sidebar */
+        button[data-testid="baseButton-header"] {
+            display: inline-flex !important;
             visibility: visible !important;
-            z-index: 999999 !important;
         }
     </style>
 """, unsafe_allow_html=True)
 
-# Aggiungo un elemento di presenza nella Sidebar (necessario per attivarla su mobile)
-st.sidebar.title("🧭 ATLAS")
-
+# Inserimento esplicito nella Sidebar per sbloccarla su mobile
+with st.sidebar:
+    st.title("🧭 ATLAS")
+    st.caption("Navigation & Options")
 
 st.markdown("""
     <style>
