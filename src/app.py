@@ -12,22 +12,24 @@ from feedback import record_user_feedback
 st.set_page_config(
     page_title="ATLAS - Personal Travel Concierge",
     page_icon="🧭",
-    layout="centered",
+    layout="wide",  # Cambiato da "centered" a "wide" per ottimizzare lo schermo mobile
     initial_sidebar_state="expanded"
 )
 
-# --- STYLING CSS AD ALTO IMPATTO VISIVO ---
-
+# Forzo la visibilità dell'icona del menu
 st.markdown("""
     <style>
-        [data-testid="stSidebarNav"] {
-            display: block !important;
-        }
         [data-testid="collapsedControl"] {
-            display: block !important;
+            display: flex !important;
+            visibility: visible !important;
+            z-index: 999999 !important;
         }
     </style>
 """, unsafe_allow_html=True)
+
+# Aggiungo un elemento di presenza nella Sidebar (necessario per attivarla su mobile)
+st.sidebar.title("🧭 ATLAS")
+
 
 st.markdown("""
     <style>
