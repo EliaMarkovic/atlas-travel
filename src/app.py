@@ -19,19 +19,27 @@ st.set_page_config(
 # --- STYLING CSS PER MOSTRARE L'HEADER E L'ICONA MENU SU MOBILE ---
 st.markdown("""
     <style>
-        /* Assicura che l'header di Streamlit sia sempre visibile */
+        /* Assicura che l'header e l'icona menu siano visibili su mobile */
         header[data-testid="stHeader"] {
             display: flex !important;
             z-index: 99999 !important;
         }
-        /* Forza la visibilità del pulsante della sidebar */
         button[data-testid="baseButton-header"] {
             display: inline-flex !important;
             visibility: visible !important;
         }
+
+        /* ELIMINA DEFINITIVAMENTE IL MENU NATIVO IN ALTO */
+        [data-testid="stSidebarNav"],
+        [data-testid="stSidebarNavItems"],
+        div[data-testid="stSidebarNavSeparator"] {
+            display: none !important;
+            height: 0px !important;
+            margin: 0px !important;
+            padding: 0px !important;
+        }
     </style>
 """, unsafe_allow_html=True)
-
 # Inserimento esplicito nella Sidebar per sbloccarla su mobile
 with st.sidebar:
     st.title("🧭 ATLAS")
