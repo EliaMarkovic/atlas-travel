@@ -363,7 +363,7 @@ if st.session_state.current_itinerary:
 
             st.markdown("---")
             st.markdown("**📍 Mappa Interattiva:**")
-            from src.mapping import render_interactive_map
+            from mapping import render_interactive_map
             render_interactive_map(dest_name, st.session_state.current_itinerary)
             
             if weather_data and "daily" in weather_data:
