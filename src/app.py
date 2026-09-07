@@ -635,7 +635,7 @@ if st.session_state.current_itinerary:
     dest_name = params.get("destination", "Viaggio")
     start_d = params.get("start_date", "")
     
-    from src.exporter import generate_ics_calendar, generate_pdf_itinerary
+    from exporter import generate_ics_calendar, generate_pdf_itinerary
     
     ics_content = generate_ics_calendar(dest_name, st.session_state.current_itinerary, start_d)
     
