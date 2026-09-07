@@ -27,7 +27,8 @@ st.markdown("""
             display: block !important;
         }
     </style>
-""", unsafe_unsafe_html=True)
+""", unsafe_allow_html=True)
+
 st.markdown("""
     <style>
         /* Mantiene visibile l'interfaccia principale e la sidebar */
