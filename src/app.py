@@ -4,7 +4,7 @@ import os
 import re
 import urllib.parse
 from datetime import date, timedelta
-from src.agent import get_travel_concierge_response, get_destination_weather, build_google_flights_url
+from agent import get_travel_concierge_response, get_destination_weather
 from src.dreambox import get_inbox_items, get_dream_notes, save_dream_note, delete_dream_note
 from src.exporter import save_itinerary_to_file
 from src.feedback import record_user_feedback
