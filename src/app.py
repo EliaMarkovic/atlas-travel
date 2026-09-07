@@ -17,6 +17,17 @@ st.set_page_config(
 )
 
 # --- STYLING CSS AD ALTO IMPATTO VISIVO ---
+
+st.markdown("""
+    <style>
+        [data-testid="stSidebarNav"] {
+            display: block !important;
+        }
+        [data-testid="collapsedControl"] {
+            display: block !important;
+        }
+    </style>
+""", unsafe_unsafe_html=True)
 st.markdown("""
     <style>
         /* Mantiene visibile l'interfaccia principale e la sidebar */
