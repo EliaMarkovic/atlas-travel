@@ -8,6 +8,7 @@ from agent import get_travel_concierge_response, get_destination_weather, build_
 from dreambox import get_inbox_items, get_dream_notes, save_dream_note, delete_dream_note
 from exporter import save_itinerary_to_file
 from feedback import record_user_feedback
+from mapping import render_interactive_map
 
 st.set_page_config(
     page_title="ATLAS - Personal Travel Concierge",
