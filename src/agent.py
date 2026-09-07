@@ -205,7 +205,7 @@ def get_travel_concierge_response(
         user_query += f"\n\n⚠️ ADATTAMENTO LIVE RICHIESTO: {live_adaptation_prompt}."
 
     # LISTA MODELLI UFFICIALI STABILI E ATTIVI
-    candidate_models = ["gemini-2.5-flash", "gemini-2.5-pro"]
+    candidate_models = ["gemini-3.5-flash", "gemini-3.6-flash"]
     response = None
     last_error = ""
 
