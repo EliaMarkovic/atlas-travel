@@ -60,7 +60,7 @@ def get_travel_concierge_response(
     live_adaptation_prompt: str = ""
 ) -> str:
     if not api_key:
-        return "Errore: Chiave API di Google non trovata nel file .env!"
+        return "Errore: Chiave API di Google non trovata nelle variabili d'ambiente!"
     
     if interests is None:
         interests = []
@@ -204,13 +204,13 @@ def get_travel_concierge_response(
     if live_adaptation_prompt:
         user_query += f"\n\n⚠️ ADATTAMENTO LIVE RICHIESTO: {live_adaptation_prompt}."
 
-    # MODELLI UFFICIALI ATTIVI SULLE API GOOGLE GENAI
-    candidate_models = ["gemini-3.5-Flash-Lite", "gemini-3.6-flash"]
+    # LISTA MODELLI UFFICIALI STABILI E ATTIVI
+    candidate_models = ["gemini-2.5-flash", "gemini-2.5-pro"]
     response = None
     last_error = ""
 
     for model_name in candidate_models:
-        for attempt in range(2):
+        for attempt in range(3):
             try:
                 response = client.models.generate_content(
                     model=model_name,
@@ -225,12 +225,14 @@ def get_travel_concierge_response(
                     break
             except Exception as e:
                 last_error = str(e)
-                if "404" in last_error or "NOT_FOUND" in last_error:
-                    break
-                if "429" in last_error or "RESOURCE_EXHAUSTED" in last_error or "503" in last_error or "UNAVAILABLE" in last_error:
+                # Se è un sovraccarico (503) o quota (429), attende ed esegue un retry
+                if any(err_code in last_error for err_code in ["503", "UNAVAILABLE", "429", "RESOURCE_EXHAUSTED"]):
                     time.sleep(2 * (attempt + 1))
+                    continue
                 else:
+                    # Per altri errori passa subito al modello successivo
                     break
+                    
         if response and response.text:
             break
 
