@@ -17,20 +17,21 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- STYLING CSS PER MOSTRARE L'HEADER E L'ICONA MENU SU MOBILE ---
+# --- STYLING CSS AD ALTO IMPATTO VISIVO & RESPONSIVE MOBILE ---
 st.markdown("""
     <style>
-        /* Assicura che l'header e l'icona menu siano visibili su mobile */
-        header[data-testid="stHeader"] {
-            display: flex !important;
-            z-index: 99999 !important;
-        }
-        button[data-testid="baseButton-header"] {
-            display: inline-flex !important;
-            visibility: visible !important;
+        /* Mantiene visibile l'header per il tasto sidebar, ma nasconde il footer */
+        footer {
+            display: none !important;
         }
 
-        /* ELIMINA DEFINITIVAMENTE IL MENU NATIVO IN ALTO */
+        header[data-testid="stHeader"] {
+            display: flex !important;
+            background-color: transparent !important;
+            z-index: 99999 !important;
+        }
+
+        /* ELIMINA IL MENU NATIVO DI STREAMLIT (DOPPIO MENU) */
         [data-testid="stSidebarNav"],
         [data-testid="stSidebarNavItems"],
         div[data-testid="stSidebarNavSeparator"] {
@@ -38,19 +39,6 @@ st.markdown("""
             height: 0px !important;
             margin: 0px !important;
             padding: 0px !important;
-        }
-    </style>
-""", unsafe_allow_html=True)
-# Inserimento esplicito nella Sidebar per sbloccarla su mobile
-with st.sidebar:
-    st.title("🧭 ATLAS")
-    st.caption("Navigation & Options")
-
-st.markdown("""
-    <style>
-        /* Mantiene visibile l'interfaccia principale e la sidebar */
-        footer, header {
-            display: none !important;
         }
 
         /* Stile personalizzato per la Sidebar visibile */
@@ -288,6 +276,41 @@ with st.sidebar:
         st.write(f"**Budget:** {profile_data['user_profile'].get('budget_tier', 'Medio-Alto')}")
         
     st.divider()
+
+    # --- SINCRONIZZAZIONE VIAGGIO (JSON) ---
+    st.header("💾 Sincronizzazione Viaggio")
+    
+    # 1. DOWNLOAD DA DESKTOP
+    if st.session_state.current_itinerary:
+        session_payload = {
+            "current_itinerary": st.session_state.current_itinerary,
+            "trip_params": st.session_state.trip_params
+        }
+        json_bytes = json.dumps(session_payload, ensure_ascii=False, indent=2).encode("utf-8")
+        dest_clean = st.session_state.trip_params.get("destination", "viaggio").replace(" ", "_")
+        
+        st.download_button(
+            label="📲 Scarica File per Celular (.json)",
+            data=json_bytes,
+            file_name=f"atlas_{dest_clean}.json",
+            mime="application/json",
+            use_container_width=True
+        )
+
+    # 2. UPLOAD SU CELLULARE
+    uploaded_file = st.file_uploader("📂 Carica Viaggio (.json)", type=["json"])
+    if uploaded_file is not None:
+        try:
+            loaded_data = json.load(uploaded_file)
+            if "current_itinerary" in loaded_data:
+                st.session_state.current_itinerary = loaded_data.get("current_itinerary")
+                st.session_state.trip_params = loaded_data.get("trip_params", {})
+                st.success("Viaggio caricato con successo!")
+                st.rerun()
+        except Exception as e:
+            st.error(f"Errore caricamento sessione: {e}")
+
+    st.divider()
     
     st.header("📥 Dream Box")
     st.caption("Salva idee e spunti al volo da includere nei tuoi itinerari.")
@@ -363,7 +386,6 @@ if st.session_state.current_itinerary:
 
             st.markdown("---")
             st.markdown("**📍 Mappa Interattiva:**")
-            from mapping import render_interactive_map
             render_interactive_map(dest_name, st.session_state.current_itinerary)
             
             if weather_data and "daily" in weather_data:
