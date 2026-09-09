@@ -267,53 +267,32 @@ with st.sidebar:
 
     st.divider()
 
-    st.header("⚙️ Configurazione")
-    st.info("🔒 **Privacy & Sicurezza:** I tuoi dati vengono elaborati in memoria locale e non vengono ceduti a terzi.")
+    # --- UPLOAD DIRETTO PER MOBILE ---
+    st.header("📂 Carica Viaggio (.json)")
+    uploaded_file = st.file_uploader("Seleziona il file inviato da PC", type=["json"], key="mobile_json_uploader")
     
+    if uploaded_file is not None:
+        try:
+            loaded_data = json.load(uploaded_file)
+            # Forza l'assegnazione diretta dello stato primario
+            if "current_itinerary" in loaded_data and loaded_data["current_itinerary"]:
+                st.session_state["current_itinerary"] = loaded_data["current_itinerary"]
+                st.session_state["trip_params"] = loaded_data.get("trip_params", {})
+                st.success("✨ Itinerario caricato!")
+        except Exception as e:
+            st.error(f"Errore caricamento: {e}")
+
+    st.divider()
+
+    st.header("⚙️ Configurazione")
     if "user_profile" in profile_data:
         st.write(f"**Utente:** {profile_data['user_profile'].get('name', 'Elia')}")
         st.write(f"**Passo:** {profile_data['user_profile'].get('travel_style', {}).get('pace', 'rilassato')}")
         st.write(f"**Budget:** {profile_data['user_profile'].get('budget_tier', 'Medio-Alto')}")
         
     st.divider()
-
-    # --- SINCRONIZZAZIONE VIAGGIO (JSON) ---
-    st.header("💾 Sincronizzazione Viaggio")
-    
-    # 1. DOWNLOAD DA DESKTOP
-    if st.session_state.current_itinerary:
-        session_payload = {
-            "current_itinerary": st.session_state.current_itinerary,
-            "trip_params": st.session_state.trip_params
-        }
-        json_bytes = json.dumps(session_payload, ensure_ascii=False, indent=2).encode("utf-8")
-        dest_clean = st.session_state.trip_params.get("destination", "viaggio").replace(" ", "_")
-        
-        st.download_button(
-            label="📲 Scarica File per Celular (.json)",
-            data=json_bytes,
-            file_name=f"atlas_{dest_clean}.json",
-            mime="application/json",
-            use_container_width=True
-        )
-
-    # 2. UPLOAD SU CELLULARE
-    uploaded_file = st.file_uploader("📂 Carica Viaggio (.json)", type=["json"])
-    if uploaded_file is not None:
-        try:
-            loaded_data = json.load(uploaded_file)
-            if "current_itinerary" in loaded_data:
-                st.session_state.current_itinerary = loaded_data.get("current_itinerary")
-                st.session_state.trip_params = loaded_data.get("trip_params", {})
-                st.success("Viaggio caricato con successo!")
-                st.rerun()
-        except Exception as e:
-            st.error(f"Errore caricamento sessione: {e}")
-
-    st.divider()
     
     st.header("📥 Dream Box")
-    st.caption("Salva idee e spunti al volo da includere nei tuoi itinerari.")
     new_note = st.text_input("Nuova ispirazione:", placeholder="Es. Visita alla cantina X")
     if st.button("Aggiungi alla Dream Box", use_container_width=True):
         if new_note:
@@ -323,7 +302,6 @@ with st.sidebar:
             
     dreams = get_dream_notes()
     if dreams:
-        st.markdown("**Note salvate:**")
         for idx, item in enumerate(dreams):
             col_note, col_del = st.columns([0.8, 0.2])
             with col_note:
@@ -332,8 +310,6 @@ with st.sidebar:
                 if st.button("🗑️", key=f"del_dream_{idx}", help="Elimina nota"):
                     delete_dream_note(idx)
                     st.rerun()
-    else:
-        st.caption("La Dream Box è vuota.")
 
     st.divider()
     st.caption("ATLAS v2.5 - Mobile Ready Suite")
