@@ -274,13 +274,34 @@ with st.sidebar:
     if uploaded_file is not None:
         try:
             loaded_data = json.load(uploaded_file)
-            # Forza l'assegnazione diretta dello stato primario
-            if "current_itinerary" in loaded_data and loaded_data["current_itinerary"]:
-                st.session_state["current_itinerary"] = loaded_data["current_itinerary"]
-                st.session_state["trip_params"] = loaded_data.get("trip_params", {})
-                st.success("✨ Itinerario caricato!")
+            itinerary_text = loaded_data.get("current_itinerary") or loaded_data.get("itinerary")
+            params_data = loaded_data.get("trip_params") or loaded_data
+            
+            if itinerary_text and st.session_state.get("current_itinerary") != itinerary_text:
+                st.session_state["current_itinerary"] = itinerary_text
+                st.session_state["trip_params"] = params_data
+                st.rerun()
         except Exception as e:
             st.error(f"Errore caricamento: {e}")
+
+    # --- DOWNLOAD PER DESKTOP ---
+    if st.session_state.current_itinerary:
+        st.divider()
+        st.header("💾 Sincronizzazione Mobile")
+        session_payload = {
+            "current_itinerary": st.session_state.current_itinerary,
+            "trip_params": st.session_state.trip_params
+        }
+        json_bytes = json.dumps(session_payload, ensure_ascii=False, indent=2).encode("utf-8")
+        dest_clean = st.session_state.trip_params.get("destination", "viaggio").replace(" ", "_")
+        
+        st.download_button(
+            label="📲 Scarica File per Celular (.json)",
+            data=json_bytes,
+            file_name=f"atlas_{dest_clean}.json",
+            mime="application/json",
+            use_container_width=True
+        )
 
     st.divider()
 
