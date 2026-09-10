@@ -167,7 +167,12 @@ def get_travel_concierge_response(
 
     --- REGOLA TASSATIVA SULLA DURATA COMPLETA E GENERAZIONE TOKEN ---
     Devi generare OBBLIGATORIAMENTE un blocco separato per **TUTTI I GIORNI** compresi tra la data di arrivo ({start_date}) e la data di partenza ({end_date}), senza mai riassumere o saltare date.
-
+        **INFORMAZIONI ED EVENTI SPECIALI NEL PERIODO:**
+    In cima all'itinerario (prima del Giorno 1), inserisci sempre una sezione '## 🌟 EVENTI & OPPORTUNITÀ NEL PERIODO' con un elenco puntato contenente:
+    - Giorni ad ingresso gratuito nei musei o attrazioni durante le date del viaggio (es. 'Il primo giovedì del mese il Museo X è gratis').
+    - Festival enogastronomici, mercatini, concerti o mostre temporanee attive nelle date selezionate.
+    - Particolarità stagionali utili per il viaggiatore.
+    
     FORMATTAZIONE TASSATIVA OBBLIGATORIA:
     {transit_instruction}
     
