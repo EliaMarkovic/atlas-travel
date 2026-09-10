@@ -213,7 +213,7 @@ def parse_itinerary_advanced(itinerary_text: str):
             budget_summary = parts[1].strip()
             break
 
-    day_matches = re.split(r'\n(?=##\s*(?:Giorno|Day)|\*\*\s*(?:Giorno|Day)|Giorno\s+\d+|Day\s+\d+|##\s*PROPOSTA ALLOGGI|##\s*LOGISTICA TRASPORTI)', main_text, flags=re.IGNORECASE)
+    day_matches = re.split(r'\n(?=##\s*(?:Giorno|Day)|\*\*\s*(?:Giorno|Day)|Giorno\s+\d+|Day\s+\d+|##\s*PROPOSTA ALLOGGI|##\s*LOGISTICA TRASPORTI|##\s*EVENTI)', main_text, flags=re.IGNORECASE)
     days_dict = {}
 
     for day_block in day_matches:
@@ -227,7 +227,7 @@ def parse_itinerary_advanced(itinerary_text: str):
         day_title = lines[0].replace('#', '').replace('*', '').strip()
         day_content = '\n'.join(lines[1:]).strip()
 
-        if any(k in day_title.lower() for k in ["giorno", "day", "proposta alloggi", "logistica trasporti"]):
+        if any(k in day_title.lower() for k in ["giorno", "day", "proposta alloggi", "logistica trasporti", "eventi"]):
             step_matches = re.split(r'\n(?=###\s+|\n\*\*Giorno\s+\d+|\n\*\*(?:Mattina|Pranzo|Pomeriggio|Sera))', day_content, flags=re.IGNORECASE)
             steps = []
 
@@ -437,11 +437,11 @@ if st.session_state.current_itinerary:
                         st.markdown(step['content'])
                         
                         st.divider()
-                        st.caption("🛠️ **Azioni rapide sulla tappa:**")
-                        col_btn1, col_btn2 = st.columns(2)
+                        st.caption("🛠️ **Azioni e Personalizzazioni sulla Tappa:**")
                         
                         key_suffix = f"{day_title}_{idx}".replace(" ", "_").replace(":", "").replace("-", "")
                         
+                        col_btn1, col_btn2 = st.columns(2)
                         with col_btn1:
                             if st.button("👁️ Escludi Tappa", key=f"excl_{key_suffix}", use_container_width=True):
                                 record_user_feedback("Già visto / Da escludere", step['title'], "Escluso direttamente dalla card")
@@ -459,7 +459,7 @@ if st.session_state.current_itinerary:
                                         arrival_hub=params.get("arrival_hub", ""),
                                         has_lodging=params.get("has_lodging", "Sì"),
                                         lodging_address=params.get("lodging_address", ""),
-                                        meal_style=params.get("meal_style", "Ibrido Famiglia (1 pasto fuori + 1 in appartamento con spesa locale)"),
+                                        meal_style=params.get("meal_style", "Ibrido Famiglia"),
                                         travel_context=params.get("travel_context", ""),
                                         num_adults=params.get("num_adults", 1),
                                         num_children=params.get("num_children", 0),
@@ -491,7 +491,45 @@ if st.session_state.current_itinerary:
                                         arrival_hub=params.get("arrival_hub", ""),
                                         has_lodging=params.get("has_lodging", "Sì"),
                                         lodging_address=params.get("lodging_address", ""),
-                                        meal_style=params.get("meal_style", "Ibrido Famiglia (1 pasto fuori + 1 in appartamento con spesa locale)"),
+                                        meal_style=params.get("meal_style", "Ibrido Famiglia"),
+                                        travel_context=params.get("travel_context", ""),
+                                        num_adults=params.get("num_adults", 1),
+                                        num_children=params.get("num_children", 0),
+                                        children_ages=params.get("children_ages", ""),
+                                        daily_budget=params.get("daily_budget", 120.0),
+                                        interests=params.get("interests", []),
+                                        trip_type=params.get("trip_type", "Città Singola / Stanziale"),
+                                        transport_mode=params.get("transport_mode", "Mezzi Pubblici / A piedi"),
+                                        live_adaptation_prompt=adapted_prompt
+                                    )
+                                    st.session_state.current_itinerary = updated_itinerary
+                                    save_itinerary_to_file(params.get("destination", "Viaggio"), updated_itinerary)
+                                    st.rerun()
+
+                        # --- TERZA OPZIONE: PERSONALIZZAZIONE PUNTUALE ---
+                        custom_req = st.text_input(
+                            "💡 Desiderio specifico per questo orario:", 
+                            placeholder="Es. Vorrei mangiare italiano / Museo di storia naturale",
+                            key=f"input_custom_{key_suffix}"
+                        )
+                        if st.button("✨ Modifica questa tappa", key=f"btn_custom_{key_suffix}", use_container_width=True):
+                            if custom_req:
+                                record_user_feedback("Richiesta Custom", step['title'], custom_req)
+                                with st.spinner(f"Adattamento in corso: '{custom_req}'..."):
+                                    params = st.session_state.trip_params
+                                    adapted_prompt = f"Per la tappa '{step['title']}', l'utente ha la seguente richiesta specifica: '{custom_req}'. Sostituisci o adatta la tappa mantenendo coerenti la logistica e gli orari."
+                                    updated_itinerary = get_travel_concierge_response(
+                                        destination_prompt=params.get("destination", ""),
+                                        start_date=params.get("start_date", ""),
+                                        arrival_time=params.get("arrival_time", ""),
+                                        end_date=params.get("end_date", ""),
+                                        departure_time=params.get("departure_time", ""),
+                                        origin_city=params.get("origin_city", ""),
+                                        transit_mode=params.get("transit_mode", ""),
+                                        arrival_hub=params.get("arrival_hub", ""),
+                                        has_lodging=params.get("has_lodging", "Sì"),
+                                        lodging_address=params.get("lodging_address", ""),
+                                        meal_style=params.get("meal_style", "Ibrido Famiglia"),
                                         travel_context=params.get("travel_context", ""),
                                         num_adults=params.get("num_adults", 1),
                                         num_children=params.get("num_children", 0),
@@ -536,7 +574,7 @@ if st.session_state.current_itinerary:
                     arrival_hub=params.get("arrival_hub", ""),
                     has_lodging=params.get("has_lodging", "Sì"),
                     lodging_address=params.get("lodging_address", ""),
-                    meal_style=params.get("meal_style", "Ibrido Famiglia (1 pasto fuori + 1 in appartamento con spesa locale)"),
+                    meal_style=params.get("meal_style", "Ibrido Famiglia"),
                     travel_context=params.get("travel_context", ""),
                     num_adults=params.get("num_adults", 1),
                     num_children=params.get("num_children", 0),
@@ -569,7 +607,7 @@ if st.session_state.current_itinerary:
                     arrival_hub=params.get("arrival_hub", ""),
                     has_lodging=params.get("has_lodging", "Sì"),
                     lodging_address=params.get("lodging_address", ""),
-                    meal_style=params.get("meal_style", "Ibrido Famiglia (1 pasto fuori + 1 in appartamento con spesa locale)"),
+                    meal_style=params.get("meal_style", "Ibrido Famiglia"),
                     travel_context=params.get("travel_context", ""),
                     num_adults=params.get("num_adults", 1),
                     num_children=params.get("num_children", 0),
@@ -628,7 +666,7 @@ if st.session_state.current_itinerary:
                     arrival_hub=params.get("arrival_hub", ""),
                     has_lodging=params.get("has_lodging", "Sì"),
                     lodging_address=params.get("lodging_address", ""),
-                    meal_style=params.get("meal_style", "Ibrido Famiglia (1 pasto fuori + 1 in appartamento con spesa locale)"),
+                    meal_style=params.get("meal_style", "Ibrido Famiglia"),
                     travel_context=params.get("travel_context", ""),
                     num_adults=params.get("num_adults", 1),
                     num_children=params.get("num_children", 0),
