@@ -17,21 +17,28 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- STYLING CSS AD ALTO IMPATTO VISIVO & RESPONSIVE MOBILE ---
+# --- ADVANCED DESIGN SYSTEM & UI/UX CSS (MODERN SAAS / iOS STYLE) ---
 st.markdown("""
     <style>
-        /* Mantiene visibile l'header per il tasto sidebar, ma nasconde il footer */
-        footer {
-            display: none !important;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        html, body, [class*="css"] {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
         }
 
+        .stApp {
+            background-color: #F8FAFC !important;
+            color: #0F172A !important;
+        }
+
+        /* HEADER E SIDEBAR NATIVA CLEAN */
+        footer { display: none !important; }
         header[data-testid="stHeader"] {
-            display: flex !important;
-            background-color: transparent !important;
+            background-color: rgba(248, 250, 252, 0.85) !important;
+            backdrop-filter: blur(12px) !important;
             z-index: 99999 !important;
         }
 
-        /* ELIMINA IL MENU NATIVO DI STREAMLIT (DOPPIO MENU) */
         [data-testid="stSidebarNav"],
         [data-testid="stSidebarNavItems"],
         div[data-testid="stSidebarNavSeparator"] {
@@ -41,92 +48,86 @@ st.markdown("""
             padding: 0px !important;
         }
 
-        /* Stile personalizzato per la Sidebar visibile */
         section[data-testid="stSidebar"] {
             background-color: #FFFFFF !important;
-            border-right: 1px solid #CBD5E1 !important;
+            border-right: 1px solid #E2E8F0 !important;
         }
 
-        /* Modern Slate Background */
-        .stApp {
-            background: linear-gradient(180deg, #F1F5F9 0%, #E2E8F0 100%) !important;
-            color: #0F172A !important;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        }
-
-        /* Card Container - Glassmorphic Style */
+        /* CONTAINER CARD ELEGANTI */
         div[data-testid="stContainer"] {
             background-color: #FFFFFF !important;
-            border: 1px solid #CBD5E1 !important;
+            border: 1px solid #E2E8F0 !important;
             border-radius: 16px !important;
-            padding: 24px !important;
-            margin-bottom: 20px !important;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+            padding: 20px 24px !important;
+            margin-bottom: 16px !important;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04) !important;
+            transition: all 0.2s ease-in-out !important;
         }
 
-        /* Headers Styling */
+        /* TIPOGRAFIA */
         h1, h2, h3, h4, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-            color: #1E293B !important;
+            color: #0F172A !important;
             font-weight: 700 !important;
-            letter-spacing: -0.3px !important;
+            letter-spacing: -0.4px !important;
         }
 
-        /* Primary Action Buttons (Gradiente Salvia / Ardesia) */
+        /* BOTTONI PRINCIPALI */
         button[kind="primary"] {
-            background: linear-gradient(135deg, #3B4A3E 0%, #222C24 100%) !important;
+            background: linear-gradient(135deg, #2D3A30 0%, #1E2721 100%) !important;
             color: #FFFFFF !important;
             border: none !important;
             border-radius: 12px !important;
-            font-weight: 700 !important;
-            font-size: 16px !important;
-            letter-spacing: 0.5px !important;
-            box-shadow: 0 4px 14px rgba(34, 44, 36, 0.35) !important;
+            font-weight: 600 !important;
+            font-size: 15px !important;
             min-height: 48px !important;
+            box-shadow: 0 4px 14px rgba(30, 39, 33, 0.25) !important;
             transition: all 0.2s ease-in-out !important;
         }
 
         button[kind="primary"]:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 20px rgba(34, 44, 36, 0.45) !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 6px 20px rgba(30, 39, 33, 0.35) !important;
         }
 
-        /* Secondary Action Buttons */
+        /* BOTTONI SECONDARI */
         button[kind="secondary"] {
-            background-color: #FFFFFF !important;
+            background-color: #F1F5F9 !important;
             color: #334155 !important;
-            border: 1px solid #94A3B8 !important;
+            border: 1px solid #E2E8F0 !important;
             border-radius: 10px !important;
             font-weight: 600 !important;
-            min-height: 42px !important;
+            font-size: 13px !important;
+            min-height: 40px !important;
+            transition: all 0.2s ease !important;
         }
 
-        /* Input Fields Styling */
+        button[kind="secondary"]:hover {
+            background-color: #E2E8F0 !important;
+            color: #0F172A !important;
+        }
+
+        /* INPUT FIELDS */
         .stTextInput input, .stSelectbox div[data-baseweb="select"], div[data-baseweb="input"] {
             border-radius: 10px !important;
-            border: 1px solid #94A3B8 !important;
-            background-color: #FAFAFA !important;
+            border: 1px solid #CBD5E1 !important;
+            background-color: #F8FAFC !important;
             color: #0F172A !important;
-            font-size: 15px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
             min-height: 44px !important;
         }
 
-        /* Multiselect Tags */
-        span[data-baseweb="tag"] {
-            background-color: #3B4A3E !important;
-            border-radius: 6px !important;
-            padding: 4px 10px !important;
+        .stTextInput input:focus, .stSelectbox div[data-baseweb="select"]:focus-within {
+            border-color: #3B4A3E !important;
+            box-shadow: 0 0 0 3px rgba(59, 74, 62, 0.12) !important;
+            background-color: #FFFFFF !important;
         }
 
-        span[data-baseweb="tag"] span {
-            color: #FFFFFF !important;
-            font-weight: 600 !important;
-        }
-
-        /* Tab Navigation Bar (iOS Style) */
+        /* TABS iOS SEGMENTS */
         div[data-baseweb="tab-list"] {
-            gap: 6px !important;
+            gap: 4px !important;
             background-color: #E2E8F0 !important;
-            padding: 6px !important;
+            padding: 4px !important;
             border-radius: 12px !important;
         }
 
@@ -134,28 +135,36 @@ st.markdown("""
             border-radius: 8px !important;
             padding: 8px 16px !important;
             border: none !important;
-            color: #475569 !important;
+            color: #64748B !important;
             font-weight: 600 !important;
+            font-size: 13px !important;
         }
 
         button[aria-selected="true"] {
             background-color: #FFFFFF !important;
-            color: #1E293B !important;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
+            color: #0F172A !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
             font-weight: 700 !important;
         }
 
-        /* Custom Badge Pill */
-        .badge-pill {
-            background: #E2E8F0;
-            color: #1E293B;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
+        /* BADGES */
+        .atlas-badge {
+            background: #F1F5F9;
+            color: #334155;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 12px;
             font-weight: 600;
+            border: 1px solid #E2E8F0;
             display: inline-block;
             margin-right: 6px;
             margin-bottom: 6px;
+        }
+
+        .atlas-badge-accent {
+            background: #E0E7FF;
+            color: #3730A3;
+            border: 1px solid #C7D2FE;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -305,7 +314,7 @@ with st.sidebar:
 
     st.divider()
 
-    st.header("⚙️ Configurazione")
+    st.header("⚙️ Profilo Utente")
     if "user_profile" in profile_data:
         st.write(f"**Utente:** {profile_data['user_profile'].get('name', 'Elia')}")
         st.write(f"**Passo:** {profile_data['user_profile'].get('travel_style', {}).get('pace', 'rilassato')}")
@@ -333,21 +342,37 @@ with st.sidebar:
                     st.rerun()
 
     st.divider()
-    st.caption("ATLAS v2.5 - Mobile Ready Suite")
+    st.caption("ATLAS v2.5 - Professional Suite")
 
-# --- AREA HEADER / LOGO ---
-logo_path = os.path.join("data", "logo.png")
-col_l1, col_l2, col_l3 = st.columns([0.35, 0.3, 0.35])
-with col_l2:
+# --- HEADER DASHBOARD ELEGANTE ---
+col_head1, col_head2 = st.columns([0.7, 0.3])
+
+with col_head1:
+    logo_path = os.path.join("data", "logo.png")
     if os.path.exists(logo_path):
-        st.image(logo_path, width=150)
+        st.image(logo_path, width=140)
     else:
-        st.title("🧭 ATLAS")
-        st.caption("PERSONAL TRAVEL CONCIERGE")
+        st.markdown("""
+            <div style='display: flex; align-items: center; gap: 12px;'>
+                <h1 style='margin: 0; font-size: 28px;'>🧭 ATLAS</h1>
+                <span class='atlas-badge atlas-badge-accent'>v2.5 Pro</span>
+            </div>
+            <p style='color: #64748B; font-size: 14px; margin-top: 4px;'>Personal Travel Concierge Intelligente</p>
+        """, unsafe_allow_html=True)
 
-st.markdown("<hr style='margin-bottom: 20px; border-color: #CBD5E1;'>", unsafe_allow_html=True)
+with col_head2:
+    if "user_profile" in profile_data:
+        nome = profile_data['user_profile'].get('name', 'Elia')
+        st.markdown(f"""
+            <div style='text-align: right; color: #475569; font-size: 13px; font-weight: 500; margin-top: 10px;'>
+                👤 <b>{nome}</b> <br>
+                <span style='color: #94A3B8;'>Stile: {profile_data['user_profile'].get('budget_tier', 'Medio-Alto')}</span>
+            </div>
+        """, unsafe_allow_html=True)
 
-# --- VISUALIZZAZIONE ITINERARIO O MOSTRA FORM ---
+st.divider()
+
+# --- VISUALIZZAZIONE ITINERARIO O FORM ---
 if st.session_state.current_itinerary:
     col_hdr1, col_hdr2 = st.columns([0.65, 0.35])
     with col_hdr1:
@@ -370,9 +395,9 @@ if st.session_state.current_itinerary:
         with st.expander(f"🗺️ **Mappa, Voli & Meteo ({dest_name})**", expanded=False):
             st.markdown(f"""
                 <div>
-                    <span class="badge-pill">🛫 {origin_name} ➔ {dest_name}</span>
-                    <span class="badge-pill">🚗 {params.get('transport_mode', 'Mezzi')}</span>
-                    <span class="badge-pill">🍽️ {params.get('meal_style', 'Ibrido Famiglia').split('(')[0]}</span>
+                    <span class="atlas-badge">🛫 {origin_name} ➔ {dest_name}</span>
+                    <span class="atlas-badge">🚗 {params.get('transport_mode', 'Mezzi')}</span>
+                    <span class="atlas-badge">🍽️ {params.get('meal_style', 'Ibrido Famiglia').split('(')[0]}</span>
                 </div>
             """, unsafe_allow_html=True)
             st.write(f"**Alloggio base:** `{params.get('lodging_address', 'Proposta da generare')}`")
@@ -432,117 +457,118 @@ if st.session_state.current_itinerary:
                 steps = days_dict[day_title]
                 
                 for idx, step in enumerate(steps):
+                    key_suffix = f"{day_title}_{idx}".replace(" ", "_").replace(":", "").replace("-", "")
+                    
                     with st.container(border=True):
                         st.subheader(f"📍 {step['title']}")
                         st.markdown(step['content'])
                         
-                        st.divider()
-                        st.caption("🛠️ **Azioni e Personalizzazioni sulla Tappa:**")
-                        
-                        key_suffix = f"{day_title}_{idx}".replace(" ", "_").replace(":", "").replace("-", "")
-                        
-                        col_btn1, col_btn2 = st.columns(2)
-                        with col_btn1:
-                            if st.button("👁️ Escludi Tappa", key=f"excl_{key_suffix}", use_container_width=True):
-                                record_user_feedback("Già visto / Da escludere", step['title'], "Escluso direttamente dalla card")
-                                with st.spinner("Sostituzione in corso..."):
-                                    params = st.session_state.trip_params
-                                    adapted_prompt = f"L'utente vuole escludere la tappa '{step['title']}'. Proponi un'alternativa coerente per questa specifica fascia oraria."
-                                    updated_itinerary = get_travel_concierge_response(
-                                        destination_prompt=params.get("destination", ""),
-                                        start_date=params.get("start_date", ""),
-                                        arrival_time=params.get("arrival_time", ""),
-                                        end_date=params.get("end_date", ""),
-                                        departure_time=params.get("departure_time", ""),
-                                        origin_city=params.get("origin_city", ""),
-                                        transit_mode=params.get("transit_mode", ""),
-                                        arrival_hub=params.get("arrival_hub", ""),
-                                        has_lodging=params.get("has_lodging", "Sì"),
-                                        lodging_address=params.get("lodging_address", ""),
-                                        meal_style=params.get("meal_style", "Ibrido Famiglia"),
-                                        travel_context=params.get("travel_context", ""),
-                                        num_adults=params.get("num_adults", 1),
-                                        num_children=params.get("num_children", 0),
-                                        children_ages=params.get("children_ages", ""),
-                                        daily_budget=params.get("daily_budget", 120.0),
-                                        interests=params.get("interests", []),
-                                        trip_type=params.get("trip_type", "Città Singola / Stanziale"),
-                                        transport_mode=params.get("transport_mode", "Mezzi Pubblici / A piedi"),
-                                        live_adaptation_prompt=adapted_prompt
-                                    )
-                                    st.session_state.current_itinerary = updated_itinerary
-                                    save_itinerary_to_file(params.get("destination", "Viaggio"), updated_itinerary)
-                                    st.rerun()
+                        # --- BLOCCO AZIONI E PERSONALIZZAZIONE TAPPA ---
+                        with st.expander("🛠️ **Personalizza o Modifica questa Tappa**", expanded=False):
+                            custom_req = st.text_input(
+                                "💡 Cosa vorresti fare in questa fascia oraria?", 
+                                placeholder="Es. Vorrei mangiare italiano / Museo di storia naturale",
+                                key=f"input_custom_{key_suffix}"
+                            )
+                            
+                            col_a1, col_a2, col_a3 = st.columns([0.4, 0.3, 0.3])
+                            
+                            with col_a1:
+                                if st.button("✨ Applica Modifica", key=f"btn_custom_{key_suffix}", use_container_width=True, type="primary"):
+                                    if custom_req:
+                                        record_user_feedback("Richiesta Custom", step['title'], custom_req)
+                                        with st.spinner(f"Aggiornamento tappa: '{custom_req}'..."):
+                                            params = st.session_state.trip_params
+                                            adapted_prompt = f"Per la tappa '{step['title']}', l'utente ha richiesto: '{custom_req}'. Sostituisci o adatta la tappa mantenendo coerenti la logistica e gli orari."
+                                            updated_itinerary = get_travel_concierge_response(
+                                                destination_prompt=params.get("destination", ""),
+                                                start_date=params.get("start_date", ""),
+                                                arrival_time=params.get("arrival_time", ""),
+                                                end_date=params.get("end_date", ""),
+                                                departure_time=params.get("departure_time", ""),
+                                                origin_city=params.get("origin_city", ""),
+                                                transit_mode=params.get("transit_mode", ""),
+                                                arrival_hub=params.get("arrival_hub", ""),
+                                                has_lodging=params.get("has_lodging", "Sì"),
+                                                lodging_address=params.get("lodging_address", ""),
+                                                meal_style=params.get("meal_style", "Ibrido Famiglia"),
+                                                travel_context=params.get("travel_context", ""),
+                                                num_adults=params.get("num_adults", 1),
+                                                num_children=params.get("num_children", 0),
+                                                children_ages=params.get("children_ages", ""),
+                                                daily_budget=params.get("daily_budget", 120.0),
+                                                interests=params.get("interests", []),
+                                                trip_type=params.get("trip_type", "Città Singola / Stanziale"),
+                                                transport_mode=params.get("transport_mode", "Mezzi Pubblici / A piedi"),
+                                                live_adaptation_prompt=adapted_prompt
+                                            )
+                                            st.session_state.current_itinerary = updated_itinerary
+                                            save_itinerary_to_file(params.get("destination", "Viaggio"), updated_itinerary)
+                                            st.rerun()
 
-                        with col_btn2:
-                            if st.button("🌧️ Piove (Piano B)", key=f"rain_{key_suffix}", use_container_width=True):
-                                record_user_feedback("Maltempo", step['title'], "Richiesta alternativa al chiuso")
-                                with st.spinner("Ricerca alternativa al chiuso..."):
-                                    params = st.session_state.trip_params
-                                    adapted_prompt = f"Piove durante l'attività '{step['title']}'. Proponi subito un'alternativa al chiuso nelle vicinanze."
-                                    updated_itinerary = get_travel_concierge_response(
-                                        destination_prompt=params.get("destination", ""),
-                                        start_date=params.get("start_date", ""),
-                                        arrival_time=params.get("arrival_time", ""),
-                                        end_date=params.get("end_date", ""),
-                                        departure_time=params.get("departure_time", ""),
-                                        origin_city=params.get("origin_city", ""),
-                                        transit_mode=params.get("transit_mode", ""),
-                                        arrival_hub=params.get("arrival_hub", ""),
-                                        has_lodging=params.get("has_lodging", "Sì"),
-                                        lodging_address=params.get("lodging_address", ""),
-                                        meal_style=params.get("meal_style", "Ibrido Famiglia"),
-                                        travel_context=params.get("travel_context", ""),
-                                        num_adults=params.get("num_adults", 1),
-                                        num_children=params.get("num_children", 0),
-                                        children_ages=params.get("children_ages", ""),
-                                        daily_budget=params.get("daily_budget", 120.0),
-                                        interests=params.get("interests", []),
-                                        trip_type=params.get("trip_type", "Città Singola / Stanziale"),
-                                        transport_mode=params.get("transport_mode", "Mezzi Pubblici / A piedi"),
-                                        live_adaptation_prompt=adapted_prompt
-                                    )
-                                    st.session_state.current_itinerary = updated_itinerary
-                                    save_itinerary_to_file(params.get("destination", "Viaggio"), updated_itinerary)
-                                    st.rerun()
+                            with col_a2:
+                                if st.button("🌧️ Piove (Piano B)", key=f"rain_{key_suffix}", use_container_width=True):
+                                    record_user_feedback("Maltempo", step['title'], "Richiesta alternativa al chiuso")
+                                    with st.spinner("Ricerca alternativa al chiuso..."):
+                                        params = st.session_state.trip_params
+                                        adapted_prompt = f"Piove durante l'attività '{step['title']}'. Proponi subito un'alternativa al chiuso nelle vicinanze."
+                                        updated_itinerary = get_travel_concierge_response(
+                                            destination_prompt=params.get("destination", ""),
+                                            start_date=params.get("start_date", ""),
+                                            arrival_time=params.get("arrival_time", ""),
+                                            end_date=params.get("end_date", ""),
+                                            departure_time=params.get("departure_time", ""),
+                                            origin_city=params.get("origin_city", ""),
+                                            transit_mode=params.get("transit_mode", ""),
+                                            arrival_hub=params.get("arrival_hub", ""),
+                                            has_lodging=params.get("has_lodging", "Sì"),
+                                            lodging_address=params.get("lodging_address", ""),
+                                            meal_style=params.get("meal_style", "Ibrido Famiglia"),
+                                            travel_context=params.get("travel_context", ""),
+                                            num_adults=params.get("num_adults", 1),
+                                            num_children=params.get("num_children", 0),
+                                            children_ages=params.get("children_ages", ""),
+                                            daily_budget=params.get("daily_budget", 120.0),
+                                            interests=params.get("interests", []),
+                                            trip_type=params.get("trip_type", "Città Singola / Stanziale"),
+                                            transport_mode=params.get("transport_mode", "Mezzi Pubblici / A piedi"),
+                                            live_adaptation_prompt=adapted_prompt
+                                        )
+                                        st.session_state.current_itinerary = updated_itinerary
+                                        save_itinerary_to_file(params.get("destination", "Viaggio"), updated_itinerary)
+                                        st.rerun()
 
-                        # --- TERZA OPZIONE: PERSONALIZZAZIONE PUNTUALE ---
-                        custom_req = st.text_input(
-                            "💡 Desiderio specifico per questo orario:", 
-                            placeholder="Es. Vorrei mangiare italiano / Museo di storia naturale",
-                            key=f"input_custom_{key_suffix}"
-                        )
-                        if st.button("✨ Modifica questa tappa", key=f"btn_custom_{key_suffix}", use_container_width=True):
-                            if custom_req:
-                                record_user_feedback("Richiesta Custom", step['title'], custom_req)
-                                with st.spinner(f"Adattamento in corso: '{custom_req}'..."):
-                                    params = st.session_state.trip_params
-                                    adapted_prompt = f"Per la tappa '{step['title']}', l'utente ha la seguente richiesta specifica: '{custom_req}'. Sostituisci o adatta la tappa mantenendo coerenti la logistica e gli orari."
-                                    updated_itinerary = get_travel_concierge_response(
-                                        destination_prompt=params.get("destination", ""),
-                                        start_date=params.get("start_date", ""),
-                                        arrival_time=params.get("arrival_time", ""),
-                                        end_date=params.get("end_date", ""),
-                                        departure_time=params.get("departure_time", ""),
-                                        origin_city=params.get("origin_city", ""),
-                                        transit_mode=params.get("transit_mode", ""),
-                                        arrival_hub=params.get("arrival_hub", ""),
-                                        has_lodging=params.get("has_lodging", "Sì"),
-                                        lodging_address=params.get("lodging_address", ""),
-                                        meal_style=params.get("meal_style", "Ibrido Famiglia"),
-                                        travel_context=params.get("travel_context", ""),
-                                        num_adults=params.get("num_adults", 1),
-                                        num_children=params.get("num_children", 0),
-                                        children_ages=params.get("children_ages", ""),
-                                        daily_budget=params.get("daily_budget", 120.0),
-                                        interests=params.get("interests", []),
-                                        trip_type=params.get("trip_type", "Città Singola / Stanziale"),
-                                        transport_mode=params.get("transport_mode", "Mezzi Pubblici / A piedi"),
-                                        live_adaptation_prompt=adapted_prompt
-                                    )
-                                    st.session_state.current_itinerary = updated_itinerary
-                                    save_itinerary_to_file(params.get("destination", "Viaggio"), updated_itinerary)
-                                    st.rerun()
+                            with col_a3:
+                                if st.button("👁️ Escludi Tappa", key=f"excl_{key_suffix}", use_container_width=True):
+                                    record_user_feedback("Già visto / Da escludere", step['title'], "Escluso direttamente dalla card")
+                                    with st.spinner("Sostituzione in corso..."):
+                                        params = st.session_state.trip_params
+                                        adapted_prompt = f"L'utente vuole escludere la tappa '{step['title']}'. Proponi un'alternativa coerente per questa specifica fascia oraria."
+                                        updated_itinerary = get_travel_concierge_response(
+                                            destination_prompt=params.get("destination", ""),
+                                            start_date=params.get("start_date", ""),
+                                            arrival_time=params.get("arrival_time", ""),
+                                            end_date=params.get("end_date", ""),
+                                            departure_time=params.get("departure_time", ""),
+                                            origin_city=params.get("origin_city", ""),
+                                            transit_mode=params.get("transit_mode", ""),
+                                            arrival_hub=params.get("arrival_hub", ""),
+                                            has_lodging=params.get("has_lodging", "Sì"),
+                                            lodging_address=params.get("lodging_address", ""),
+                                            meal_style=params.get("meal_style", "Ibrido Famiglia"),
+                                            travel_context=params.get("travel_context", ""),
+                                            num_adults=params.get("num_adults", 1),
+                                            num_children=params.get("num_children", 0),
+                                            children_ages=params.get("children_ages", ""),
+                                            daily_budget=params.get("daily_budget", 120.0),
+                                            interests=params.get("interests", []),
+                                            trip_type=params.get("trip_type", "Città Singola / Stanziale"),
+                                            transport_mode=params.get("transport_mode", "Mezzi Pubblici / A piedi"),
+                                            live_adaptation_prompt=adapted_prompt
+                                        )
+                                        st.session_state.current_itinerary = updated_itinerary
+                                        save_itinerary_to_file(params.get("destination", "Viaggio"), updated_itinerary)
+                                        st.rerun()
     else:
         st.markdown(st.session_state.current_itinerary)
 
@@ -718,7 +744,7 @@ if st.session_state.current_itinerary:
 
     st.markdown("""
         <div style="text-align: center; margin-top: 25px; margin-bottom: 15px;">
-            <a href="#" style="background-color: #3B4A3E; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-block;">⬆️ Torna in cima</a>
+            <a href="#" style="background-color: #2D3A30; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-block;">⬆️ Torna in cima</a>
         </div>
     """, unsafe_allow_html=True)
 
