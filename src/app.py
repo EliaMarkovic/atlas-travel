@@ -17,25 +17,25 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- ADVANCED DESIGN SYSTEM & UI/UX CSS (MODERN SAAS / iOS STYLE) ---
+# --- ADVANCED DESIGN SYSTEM & UI/UX CSS (ULTRA MODERN SAAS STYLE) ---
 st.markdown("""
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
         html, body, [class*="css"] {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
 
         .stApp {
-            background-color: #F8FAFC !important;
+            background-color: #F1F5F9 !important;
             color: #0F172A !important;
         }
 
-        /* HEADER E SIDEBAR NATIVA CLEAN */
+        /* HEADER E SIDEBAR CLEAN */
         footer { display: none !important; }
         header[data-testid="stHeader"] {
-            background-color: rgba(248, 250, 252, 0.85) !important;
-            backdrop-filter: blur(12px) !important;
+            background-color: rgba(241, 245, 249, 0.8) !important;
+            backdrop-filter: blur(16px) !important;
             z-index: 99999 !important;
         }
 
@@ -51,58 +51,65 @@ st.markdown("""
         section[data-testid="stSidebar"] {
             background-color: #FFFFFF !important;
             border-right: 1px solid #E2E8F0 !important;
+            box-shadow: 4px 0 24px rgba(0,0,0,0.02) !important;
         }
 
-        /* CONTAINER CARD ELEGANTI */
+        /* CONTAINER CARD STYLE */
         div[data-testid="stContainer"] {
             background-color: #FFFFFF !important;
             border: 1px solid #E2E8F0 !important;
-            border-radius: 16px !important;
-            padding: 20px 24px !important;
-            margin-bottom: 16px !important;
-            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04) !important;
-            transition: all 0.2s ease-in-out !important;
+            border-radius: 18px !important;
+            padding: 24px !important;
+            margin-bottom: 20px !important;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.02) !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
 
-        /* TIPOGRAFIA */
+        div[data-testid="stContainer"]:hover {
+            border-color: #CBD5E1 !important;
+            box-shadow: 0 20px 30px -10px rgba(15, 23, 42, 0.07) !important;
+        }
+
+        /* TIPOGRAFIA MODERNA */
         h1, h2, h3, h4, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
             color: #0F172A !important;
             font-weight: 700 !important;
-            letter-spacing: -0.4px !important;
+            letter-spacing: -0.02em !important;
         }
 
         /* BOTTONI PRINCIPALI */
         button[kind="primary"] {
-            background: linear-gradient(135deg, #2D3A30 0%, #1E2721 100%) !important;
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%) !important;
             color: #FFFFFF !important;
             border: none !important;
             border-radius: 12px !important;
-            font-weight: 600 !important;
-            font-size: 15px !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
             min-height: 48px !important;
-            box-shadow: 0 4px 14px rgba(30, 39, 33, 0.25) !important;
-            transition: all 0.2s ease-in-out !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2) !important;
+            transition: all 0.2s ease !important;
         }
 
         button[kind="primary"]:hover {
-            transform: translateY(-1px) !important;
-            box-shadow: 0 6px 20px rgba(30, 39, 33, 0.35) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.3) !important;
         }
 
         /* BOTTONI SECONDARI */
         button[kind="secondary"] {
-            background-color: #F1F5F9 !important;
+            background-color: #F8FAFC !important;
             color: #334155 !important;
-            border: 1px solid #E2E8F0 !important;
+            border: 1px solid #CBD5E1 !important;
             border-radius: 10px !important;
             font-weight: 600 !important;
             font-size: 13px !important;
-            min-height: 40px !important;
+            min-height: 42px !important;
             transition: all 0.2s ease !important;
         }
 
         button[kind="secondary"]:hover {
-            background-color: #E2E8F0 !important;
+            background-color: #F1F5F9 !important;
+            border-color: #94A3B8 !important;
             color: #0F172A !important;
         }
 
@@ -114,57 +121,69 @@ st.markdown("""
             color: #0F172A !important;
             font-size: 14px !important;
             font-weight: 500 !important;
-            min-height: 44px !important;
+            min-height: 46px !important;
         }
 
         .stTextInput input:focus, .stSelectbox div[data-baseweb="select"]:focus-within {
-            border-color: #3B4A3E !important;
-            box-shadow: 0 0 0 3px rgba(59, 74, 62, 0.12) !important;
+            border-color: #0F172A !important;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08) !important;
             background-color: #FFFFFF !important;
         }
 
-        /* TABS iOS SEGMENTS */
+        /* TABS SEGMENTS */
         div[data-baseweb="tab-list"] {
-            gap: 4px !important;
+            gap: 6px !important;
             background-color: #E2E8F0 !important;
-            padding: 4px !important;
-            border-radius: 12px !important;
+            padding: 5px !important;
+            border-radius: 14px !important;
         }
 
         button[data-baseweb="tab"] {
-            border-radius: 8px !important;
-            padding: 8px 16px !important;
+            border-radius: 10px !important;
+            padding: 10px 20px !important;
             border: none !important;
             color: #64748B !important;
             font-weight: 600 !important;
-            font-size: 13px !important;
+            font-size: 14px !important;
         }
 
         button[aria-selected="true"] {
             background-color: #FFFFFF !important;
             color: #0F172A !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06) !important;
             font-weight: 700 !important;
         }
 
         /* BADGES */
         .atlas-badge {
-            background: #F1F5F9;
+            background: #F8FAFC;
             color: #334155;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 600;
             border: 1px solid #E2E8F0;
-            display: inline-block;
-            margin-right: 6px;
-            margin-bottom: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 8px;
+            margin-bottom: 8px;
         }
 
         .atlas-badge-accent {
-            background: #E0E7FF;
-            color: #3730A3;
-            border: 1px solid #C7D2FE;
+            background: #EFF6FF;
+            color: #1D4ED8;
+            border: 1px solid #BFDBFE;
+        }
+
+        /* HERO BANNER CONTAINER */
+        .hero-card {
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            color: #FFFFFF;
+            padding: 24px 32px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 30px -5px rgba(15, 23, 42, 0.25);
         }
     </style>
 """, unsafe_allow_html=True)
@@ -342,41 +361,31 @@ with st.sidebar:
                     st.rerun()
 
     st.divider()
-    st.caption("ATLAS v2.5 - Professional Suite")
+    st.caption("ATLAS v2.5 - Enterprise Suite")
 
-# --- HEADER DASHBOARD ELEGANTE ---
-col_head1, col_head2 = st.columns([0.7, 0.3])
+# --- HERO HEADER DASHBOARD ---
+nome_utente = profile_data.get('user_profile', {}).get('name', 'Elia') if "user_profile" in profile_data else "Elia"
 
-with col_head1:
-    logo_path = os.path.join("data", "logo.png")
-    if os.path.exists(logo_path):
-        st.image(logo_path, width=140)
-    else:
-        st.markdown("""
-            <div style='display: flex; align-items: center; gap: 12px;'>
-                <h1 style='margin: 0; font-size: 28px;'>🧭 ATLAS</h1>
-                <span class='atlas-badge atlas-badge-accent'>v2.5 Pro</span>
+st.markdown(f"""
+    <div class="hero-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div>
+                <span class="atlas-badge atlas-badge-accent" style="background: rgba(255,255,255,0.15); color: #FFF; border: none; font-size: 11px;">PERSONAL TRAVEL CONCIERGE</span>
+                <h1 style="color: #FFFFFF !important; margin: 8px 0 4px 0; font-size: 32px; font-weight: 800;">🧭 ATLAS</h1>
+                <p style="color: #94A3B8; margin: 0; font-size: 15px;">Bentornato, <b style="color: #F8FAFC;">{nome_utente}</b>. Pianifica o consulta il tuo prossimo itinerario su misura.</p>
             </div>
-            <p style='color: #64748B; font-size: 14px; margin-top: 4px;'>Personal Travel Concierge Intelligente</p>
-        """, unsafe_allow_html=True)
-
-with col_head2:
-    if "user_profile" in profile_data:
-        nome = profile_data['user_profile'].get('name', 'Elia')
-        st.markdown(f"""
-            <div style='text-align: right; color: #475569; font-size: 13px; font-weight: 500; margin-top: 10px;'>
-                👤 <b>{nome}</b> <br>
-                <span style='color: #94A3B8;'>Stile: {profile_data['user_profile'].get('budget_tier', 'Medio-Alto')}</span>
+            <div>
+                <span class="atlas-badge" style="background: rgba(255,255,255,0.1); color: #F1F5F9; border: 1px solid rgba(255,255,255,0.2);">v2.5 Enterprise</span>
             </div>
-        """, unsafe_allow_html=True)
-
-st.divider()
+        </div>
+    </div>
+""", unsafe_allow_html=True)
 
 # --- VISUALIZZAZIONE ITINERARIO O FORM ---
 if st.session_state.current_itinerary:
-    col_hdr1, col_hdr2 = st.columns([0.65, 0.35])
+    col_hdr1, col_hdr2 = st.columns([0.7, 0.3])
     with col_hdr1:
-        st.success("✨ Itinerario Pronto!")
+        st.success("✨ Itinerario Generato con Successo!")
     with col_hdr2:
         if st.button("✏️ Nuova Ricerca", use_container_width=True):
             st.session_state.current_itinerary = None
@@ -744,7 +753,7 @@ if st.session_state.current_itinerary:
 
     st.markdown("""
         <div style="text-align: center; margin-top: 25px; margin-bottom: 15px;">
-            <a href="#" style="background-color: #2D3A30; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-block;">⬆️ Torna in cima</a>
+            <a href="#" style="background-color: #1E293B; color: white; padding: 12px 24px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-block;">⬆️ Torna in cima</a>
         </div>
     """, unsafe_allow_html=True)
 
